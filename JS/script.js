@@ -42,3 +42,58 @@ header.addEventListener("click", function (e) {
       .scrollIntoView({ behavior: "smooth" });
   }
 });
+
+// Nav hover effect ----------------------------------------------
+const opacityHover = function (e) {
+  if (e.target.tagName === "A") {
+    const siblings = e.target.closest("nav").querySelectorAll("a");
+
+    siblings.forEach((el) => {
+      if (el !== e.target) el.style.opacity = this;
+    });
+    document.querySelector(".logo").style.opacity = this;
+  }
+};
+
+nav.addEventListener("mouseover", opacityHover.bind(0.5));
+nav.addEventListener("mouseout", opacityHover.bind(1));
+
+// Content Tabs ----------------------------------------------
+const tabs = document.querySelectorAll(".tab");
+const tabsContainer = document.querySelector(".tabs-container");
+const tabsContent = document.querySelectorAll(".content");
+
+tabsContainer.addEventListener("click", (e) => {
+  if (!e.target.classList.contains("tab")) return;
+
+  tabs.forEach((tab) => tab.classList.remove("tab-active"));
+  e.target.classList.add("tab-active");
+
+  tabsContent.forEach((content) => content.classList.remove("content-active"));
+  document
+    .querySelector(`.content-${e.target.getAttribute("data-tab")}`)
+    .classList.add("content-active");
+});
+
+// Sticky Navigation ----------------------------------------------
+const navHeight = nav.getBoundingClientRect().height;
+const navPlaceHolder = document.querySelector(".nav-placeholder");
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) {
+    nav.classList.add("nav-sticky");
+    navPlaceHolder.style.height = `${navHeight}px`;
+  } else {
+    nav.classList.remove("nav-sticky");
+    navPlaceHolder.style.height = `0`;
+  }
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${nav.getBoundingClientRect().height}px`,
+});
+headerObserver.observe(header);

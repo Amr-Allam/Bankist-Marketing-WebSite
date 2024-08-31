@@ -25,6 +25,8 @@ a {
   text-decoration: none;
   outline: none;
   transition: var(--button-transition);
+  color: white;
+  -webkit-tap-highlight-color: transparent;
 }
 p {
   color: #666;
@@ -34,6 +36,7 @@ button {
   cursor: pointer;
   border: none;
   transition: var(--button-transition);
+  -webkit-tap-highlight-color: transparent;
 }
 .highlight {
   position: relative;
@@ -55,6 +58,12 @@ button {
   width: 55px;
   height: 55px;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.circle i {
+  font-size: 25px;
 }
 
 .modal {
@@ -156,9 +165,10 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 15px;
+  padding: 15px 120px;
   gap: 20px;
-  max-width: 1340px;
+  width: 100%;
+  /* max-width: 1340px; */
   margin: 0 auto;
   flex-wrap: wrap;
 }
@@ -286,40 +296,61 @@ section h3 {
   margin: 0 auto;
   background-color: #fff;
 }
-.operations .tabs {
+.operations .tabs-container {
   display: flex;
   justify-content: center;
   gap: 30px;
   transform: translateY(-50%);
 }
-.operations .tabs button {
+.operations .tabs-container .tab {
   padding: 12.5px 25px;
   border-radius: 30px;
   font-weight: 500;
+  transition: var(--button-transition);
 }
-.operations .tabs .transfer {
-  background-color: var(--color-secondary);
+.operations .tabs-container .tab-active {
   transform: translateY(-15%);
 }
-.operations .tabs .loan {
+.operations .tabs-container .transfer {
+  background-color: var(--color-secondary);
+}
+.operations .tabs-container .loan {
   background-color: var(--color-primary);
 }
-.operations .tabs .close {
+.operations .tabs-container .close {
   background-color: var(--color-tertiary);
 }
 .operations .content {
-  display: grid;
+  display: none;
   align-items: center;
   gap: 5px 20px;
   padding: 0px 40px 30px;
+}
+.operations .content-active {
+  display: grid;
   grid-template-columns: auto 1fr;
 }
 .operations .content .circle {
-  flex-shrink: 0;
+  /* flex-shrink: 0; */
   width: 70px;
   height: 70px;
   background-color: var(--color-secondary-opacity);
   grid-area: 1 / 1 / 2 / 2;
+}
+.operations .content .circle i {
+  color: var(--color-secondary);
+}
+.operations .content-2 .circle {
+  background-color: var(--color-primary-opacity);
+}
+.operations .content-2 .circle i {
+  color: var(--color-primary);
+}
+.operations .content-3 .circle {
+  background-color: var(--color-tertiary-opacity);
+}
+.operations .content-3 .circle i {
+  color: var(--color-tertiary);
 }
 .operations .content h5 {
   font-size: 22.5px;
@@ -454,7 +485,19 @@ footer .copyright a {
   color: #eee;
 }
 
+@media (min-width: 650px) {
+  .nav-sticky {
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.9);
+    top: 0;
+    z-index: 1;
+  }
+}
+
 @media (max-width: 992px) {
+  nav {
+    padding: 15px 15px;
+  }
   .header-title h1 {
     font-size: 45px;
   }
@@ -537,7 +580,6 @@ footer .copyright a {
   }
 
   .operations .content {
-    display: grid;
     justify-items: center;
     grid-template-columns: 1fr;
   }
@@ -550,10 +592,10 @@ footer .copyright a {
   .operations .content p {
     grid-area: 3 / 1 / 4 / 2;
   }
-  .operations .tabs {
+  .operations .tabs-container {
     gap: 10px;
   }
-  .operations .tabs button {
+  .operations .tabs-container .tab {
     padding: 12.5px 15px;
     font-size: 15px;
   }
@@ -605,19 +647,19 @@ footer .copyright a {
 }
 
 nav .open-account:hover,
-.operations .tabs .loan:hover,
+.operations .tabs-container .loan:hover,
 .section-4 button:hover,
 .modal form .next:hover {
   background-color: var(--color-primary-darker);
 }
-.operations .tabs .transfer:hover {
+.operations .tabs-container .transfer:hover {
   background-color: var(--color-secondary-darker);
 }
-.operations .tabs .close:hover {
+.operations .tabs-container .close:hover {
   background-color: var(--color-tertiary-darker);
 }
 .slider button:hover,
-footer ul li:hover,
+footer ul a:hover,
 footer .copyright a:hover {
   color: var(--color-primary-darker);
 }
