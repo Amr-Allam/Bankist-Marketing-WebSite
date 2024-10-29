@@ -77,18 +77,12 @@ tabsContainer.addEventListener("click", (e) => {
 
 // Sticky Navigation ----------------------------------------------
 const navHeight = nav.getBoundingClientRect().height;
-const navPlaceHolder = document.querySelector(".nav-placeholder");
 
 const stickyNav = function (entries) {
   const [entry] = entries;
 
-  if (!entry.isIntersecting) {
-    nav.classList.add("nav-sticky");
-    navPlaceHolder.style.height = `${navHeight}px`;
-  } else {
-    nav.classList.remove("nav-sticky");
-    navPlaceHolder.style.height = `0`;
-  }
+  if (!entry.isIntersecting) nav.classList.add("nav-sticky");
+  else nav.classList.remove("nav-sticky");
 };
 
 const headerObserver = new IntersectionObserver(stickyNav, {
@@ -97,3 +91,127 @@ const headerObserver = new IntersectionObserver(stickyNav, {
   rootMargin: `-${nav.getBoundingClientRect().height}px`,
 });
 headerObserver.observe(header);
+
+// Reveal Sections ----------------------------------------------
+const allSections = document.querySelectorAll("section");
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove("section-hidden");
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSections.forEach((section) => {
+  sectionObserver.observe(section);
+  section.classList.add("section-hidden");
+});
+
+// Lazy Loading Images ----------------------------------------------
+const imgTargets = document.querySelectorAll("img[data-src]");
+
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener("load", function () {
+    entry.target.classList.remove("lazy-img");
+  });
+  observer.unobserve(entry.target);
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: "200px",
+});
+
+imgTargets.forEach((img) => imgObserver.observe(img));
+
+// Slider ----------------------------------------------
+const slider = function () {
+  const slides = document.querySelectorAll(".slide");
+  const btnRight = document.querySelector(".slide-right");
+  const btnLeft = document.querySelector(".slide-left");
+  const dotsContainer = document.querySelector(".dots");
+  let curSlide = 0;
+
+  const createDots = function () {
+    slides.forEach((_, i) => {
+      dotsContainer.insertAdjacentHTML(
+        "beforeend",
+        `<button class="dot" data-slide="${i}"></button>`
+      );
+    });
+  };
+
+  const activeDot = function (slide) {
+    document
+      .querySelectorAll(".dot")
+      .forEach((dot) => dot.classList.remove("dot-active"));
+
+    document
+      .querySelector(`.dot[data-slide="${slide}"]`)
+      .classList.add("dot-active");
+  };
+
+  const goToSlide = function (slide) {
+    slides.forEach((s, i) => {
+      s.style.transform = `translateX(${100 * (i - slide)}%)`;
+    });
+  };
+
+  const nextSlide = function () {
+    if (curSlide === slides.length - 1) {
+      curSlide = 0;
+    } else {
+      curSlide++;
+    }
+
+    goToSlide(curSlide);
+    activeDot(curSlide);
+  };
+
+  const prevSlide = function () {
+    if (curSlide === 0) {
+      curSlide = slides.length - 1;
+    } else {
+      curSlide--;
+    }
+
+    goToSlide(curSlide);
+    activeDot(curSlide);
+  };
+
+  const init = function () {
+    createDots();
+    activeDot(0);
+    goToSlide(0);
+  };
+  init();
+
+  btnRight.addEventListener("click", nextSlide);
+  btnLeft.addEventListener("click", prevSlide);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight") nextSlide();
+    if (e.key === "ArrowLeft") prevSlide();
+  });
+
+  dotsContainer.addEventListener("click", function (e) {
+    if (e.target.classList.contains("dot")) {
+      curSlide = Number(e.target.dataset.slide);
+
+      goToSlide(curSlide);
+      activeDot(curSlide);
+    }
+  });
+};
+slider();

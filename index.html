@@ -13,10 +13,11 @@
     <link rel="stylesheet" href="CSS/normalize.css" />
     <link rel="stylesheet" href="CSS/main.css" />
     <title>Mine</title>
+
+    <script defer src="JS/script.js"></script>
   </head>
   <body>
     <header>
-      <div class="nav-placeholder"></div>
       <nav>
         <img src="Images/logo.png" alt="Bankist logo" class="logo" />
         <ul>
@@ -47,9 +48,14 @@
       </div>
       <div class="features">
         <div class="feature">
-          <img src="Images/digital.jpg" alt="Computer" />
+          <img
+            src="Images/digital-lazy.jpg"
+            data-src="Images/digital.jpg"
+            alt="Computer"
+            class="lazy-img"
+          />
           <div class="text">
-            <div class="circle"></div>
+            <div class="circle"><i class="fa-solid fa-display"></i></div>
             <h5>100% digital bank</h5>
             <p>
               Lorem ipsum dolor sit elit amet consectetur adipisicing elit. Unde
@@ -60,7 +66,7 @@
         </div>
         <div class="feature">
           <div class="text">
-            <div class="circle"></div>
+            <div class="circle"><i class="fa-solid fa-arrow-trend-up"></i></div>
             <h5>Watch your money grow</h5>
             <p>
               Nesciunt quos autem elit dolorum voluptates cum dolores dicta fuga
@@ -68,12 +74,22 @@
               quibusdam!
             </p>
           </div>
-          <img src="Images/grow.jpg" alt="Plant" />
+          <img
+            src="Images/grow-lazy.jpg"
+            data-src="Images/grow.jpg"
+            alt="Plant"
+            class="lazy-img"
+          />
         </div>
         <div class="feature">
-          <img src="Images/card.jpg" alt="Credit Card" />
+          <img
+            src="Images/card-lazy.jpg"
+            data-src="Images/card.jpg"
+            alt="Credit Card"
+            class="lazy-img"
+          />
           <div class="text">
-            <div class="circle"></div>
+            <div class="circle"><i class="fa-regular fa-credit-card"></i></div>
             <h5>Free debit card included</h5>
             <p>
               Quasi, fugit in cumque cupiditate reprehenderit sit debitis animi
@@ -141,7 +157,7 @@
         <h3>Millions of Bankists are already making their lifes simpler.</h3>
       </div>
       <div class="slider">
-        <div class="slide slide-1">
+        <div class="slide">
           <div class="testimonial">
             <h5>Best financial decision ever!</h5>
             <blockquote>
@@ -159,7 +175,7 @@
             </address>
           </div>
         </div>
-        <!-- <div class="slide slide-2">
+        <div class="slide">
           <div class="testimonial">
             <h5>The last step to becoming a complete minimalist</h5>
             <blockquote>
@@ -176,7 +192,7 @@
             </address>
           </div>
         </div>
-        <div class="slide slide-3">
+        <div class="slide">
           <div class="testimonial">
             <h5>Finally free from old-school banks</h5>
             <blockquote>
@@ -193,7 +209,7 @@
               <p>Lisbon, Portugal</p>
             </address>
           </div>
-        </div> -->
+        </div>
         <button class="slide-left">
           <i class="fa-solid fa-circle-chevron-left"></i>
         </button>
@@ -251,6 +267,5 @@
       </form>
     </div>
     <div class="overlay hidden"></div>
-    <script src="JS/script.js"></script>
   </body>
 </html>
